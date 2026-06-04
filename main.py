@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname
 logger = logging.getLogger(__name__)
 
 BEHAVIORS = [
-    AutoReplyBehavior(),
+    # AutoReplyBehavior(),
     TranslateBehavior(),
     ExportMessagesBehavior(),
 ]
