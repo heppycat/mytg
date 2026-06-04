@@ -5,12 +5,14 @@ from telethon.sessions import StringSession
 
 import config
 from behaviors.auto_reply import AutoReplyBehavior
+from behaviors.translate import TranslateBehavior
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
 BEHAVIORS = [
     AutoReplyBehavior(),
+    TranslateBehavior(),
 ]
 
 
