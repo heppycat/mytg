@@ -186,11 +186,9 @@ class TranslateBehavior(Behavior):
                 await respond("[Translation failed]")
                 return
 
-            target_name = _CODE_TO_NAME.get(target_code, target_code.upper())
-
             if source_code == target_code:
+                target_name = _CODE_TO_NAME.get(target_code, target_code.upper())
                 await respond(f"[Already in {target_name}]")
                 return
 
-            source_name = _CODE_TO_NAME.get(source_code, source_code.upper())
-            await respond(f"[{source_name} → {target_name}]\n{translated}")
+            await respond(translated)
