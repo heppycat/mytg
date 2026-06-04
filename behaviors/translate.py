@@ -153,38 +153,44 @@ def _translate(text: str, target: str) -> tuple[str, str]:
 
 class TranslateBehavior(Behavior):
     def register(self, client: TelegramClient) -> None:
-        @client.on(events.NewMessage(outgoing=True, pattern=r"^!tr\s+(.+)$"))
+        @client.on(events.NewMessage(func=lambda e: e.is_private, pattern=r"^!tr\s+(.+)$"))
         async def handler(event: events.NewMessage.Event) -> None:
             lang_input = event.pattern_match.group(1).strip().lower()
             target_code = LANG_MAP.get(lang_input)
 
+            async def respond(msg: str) -> None:
+                if event.out:
+                    await event.edit(msg)
+                else:
+                    await event.reply(msg)
+
             if target_code is None:
-                await event.edit(f"Unknown language '{lang_input}'.")
+                await respond(f"Unknown language '{lang_input}'.")
                 return
 
             if not event.reply_to_msg_id:
-                await event.edit("Reply to a message to translate it.")
+                await respond("Reply to a message to translate it.")
                 return
 
             replied = await event.get_reply_message()
             text = getattr(replied, "text", None) or getattr(replied, "message", None)
 
             if not text:
-                await event.edit("No text to translate.")
+                await respond("No text to translate.")
                 return
 
             try:
                 translated, source_code = await asyncio.to_thread(_translate, text, target_code)
             except Exception as e:
                 logger.error("Translation failed: %s", e)
-                await event.edit("[Translation failed]")
+                await respond("[Translation failed]")
                 return
 
             target_name = _CODE_TO_NAME.get(target_code, target_code.upper())
 
             if source_code == target_code:
-                await event.edit(f"[Already in {target_name}]")
+                await respond(f"[Already in {target_name}]")
                 return
 
             source_name = _CODE_TO_NAME.get(source_code, source_code.upper())
-            await event.edit(f"[{source_name} → {target_name}]\n{translated}")
+            await respond(f"[{source_name} → {target_name}]\n{translated}")
