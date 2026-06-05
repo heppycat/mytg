@@ -6,7 +6,7 @@ A minimal Telegram userbot built on [Telethon](https://github.com/LonamiWebs/Tel
 
 ---
 
-[Translation behavior](assets/demo.gif)
+![Translation behavior](assets/demo.gif)
 
 ---
 
