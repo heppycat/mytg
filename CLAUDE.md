@@ -2,7 +2,7 @@
 
 ## What This Project Is
 
-A personal Telegram userbot built on Telethon. It connects to the user's own Telegram account and runs pluggable "behaviors" — self-contained event handlers that react to account activity (incoming DMs, group messages, etc.). No bot API token, no job queue, no database. The focus is on staying minimal while being easy to extend.
+A Telegram userbot built on Telethon. It connects to the user's own Telegram account and runs pluggable "behaviors" — self-contained event handlers that react to account activity (incoming DMs, group messages, etc.). No bot API token, no job queue, no database. The focus is on staying minimal while being easy to extend.
 
 ## Tech Stack
 
